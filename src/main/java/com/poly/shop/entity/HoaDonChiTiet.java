@@ -9,5 +9,5 @@ package com.poly.shop.entity;
  * @author nguyenvv
  */
 public class HoaDonChiTiet {
-    
+   
 }
