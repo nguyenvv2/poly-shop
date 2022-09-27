@@ -7,6 +7,8 @@ package com.poly.shop.view;
 import com.poly.shop.entity.HoaDon;
 import com.poly.shop.entity.HoaDonChiTiet;
 import com.poly.shop.entity.SanPham;
+import com.poly.shop.service.SanPhamService;
+import com.poly.shop.service.impl.SanPhamServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -20,6 +22,7 @@ public class HoaDonView extends javax.swing.JFrame {
     /**
      * Creates new form HoaDonView
      */
+    private SanPhamService sanPhamService = new SanPhamServiceImpl();
     private DefaultTableModel tableChiTiet;
     private DefaultTableModel tableSanPham;
     private DefaultTableModel tableHoaDon;
@@ -29,9 +32,10 @@ public class HoaDonView extends javax.swing.JFrame {
 
     public HoaDonView() {
         initComponents();
+        List<SanPham> listSP = sanPhamService.getListSanPham();
         loadTableChiTiet(listHoaDonChiTiet);
         loadTableHoaDon(listHoaDon);
-        loadTableSanPham(listSanPham);
+        loadTableSanPham(listSP);
     }
 
     private void loadTableChiTiet(List<HoaDonChiTiet> list) {
@@ -43,8 +47,11 @@ public class HoaDonView extends javax.swing.JFrame {
 
     private void loadTableSanPham(List<SanPham> list) {
         tableSanPham = (DefaultTableModel) tbSanPham.getModel();
+        tableSanPham.setRowCount(0);
         for (SanPham sanPham : list) {
-            tableSanPham.addRow(new Object[]{});
+            tableSanPham.addRow(new Object[]{sanPham.getId(),
+                sanPham.getTenSanPham(), sanPham.getSoLuong(),
+                sanPham.getGiaBan(), sanPham.getTrangThai()});
         }
     }
 
@@ -111,7 +118,6 @@ public class HoaDonView extends javax.swing.JFrame {
 
         tbSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null}
@@ -130,7 +136,6 @@ public class HoaDonView extends javax.swing.JFrame {
 
         tbChiTiet.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"q", "1", "1", "1", null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null}

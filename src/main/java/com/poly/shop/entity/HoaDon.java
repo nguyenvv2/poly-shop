@@ -18,19 +18,18 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "HoaDon")
 public class HoaDon {
-     
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "maHoaDon")
     private Integer maHoaDon;
-    
-    @Column(name = "tenKhachHang",length = 255)
+
+    @Column(name = "tenKhachHang", length = 255)
     private String tenKhachHang;
-    
+
     @Column(name = "tongTien")
     private Integer tongTien;
-    
-    
+
     @Column(name = "diaChi", length = 255)
     private String diaChi;
 
