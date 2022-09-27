@@ -1,11 +1,18 @@
 CREATE DATABASE TEST_HOA_DON
 
+CREATE TABLE DanhMuc(
+     id [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    tenDanhMuc VARCHAR(255),
+)
+
 CREATE TABLE SanPham(
     id [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
     tenSanPham VARCHAR(255),
     soLuong INT,
     giaBan INT,
-    trangThai INT
+    trangThai INT,
+    maDanhMuc INT,
+    CONSTRAINT fk_danhmuc FOREIGN KEY (maDanhMuc) REFERENCES DanhMuc(id),
 )
 
 CREATE TABLE HoaDon(

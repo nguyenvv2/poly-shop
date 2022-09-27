@@ -22,6 +22,74 @@ public class SanPham {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
+
+    @Column(name = "tenSanPham", length = 255)
+    private String tenSanPham;
+
+    @Column(name = "soLuong")
+    private Integer soLuong;
+
+    @Column(name = "giaBan")
+    private Integer giaBan;
+
+    @Column(name = "trangThai")
+    private Integer trangThai;
+
+    public SanPham(Integer id, String tenSanPham, Integer soLuong, Integer giaBan, Integer trangThai) {
+        this.id = id;
+        this.tenSanPham = tenSanPham;
+        this.soLuong = soLuong;
+        this.giaBan = giaBan;
+        this.trangThai = trangThai;
+    }
+
+    @Override
+    public String toString() {
+        return "SanPham{" + "id=" + id + ", tenSanPham=" + tenSanPham + ", soLuong=" + soLuong + ", giaBan=" + giaBan + ", trangThai=" + trangThai + '}';
+    }
+
+    public SanPham() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getTenSanPham() {
+        return tenSanPham;
+    }
+
+    public void setTenSanPham(String tenSanPham) {
+        this.tenSanPham = tenSanPham;
+    }
+
+    public Integer getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(Integer soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    public Integer getGiaBan() {
+        return giaBan;
+    }
+
+    public void setGiaBan(Integer giaBan) {
+        this.giaBan = giaBan;
+    }
+
+    public Integer getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(Integer trangThai) {
+        this.trangThai = trangThai;
+    }
 
 }
