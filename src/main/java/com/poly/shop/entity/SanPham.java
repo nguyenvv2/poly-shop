@@ -50,6 +50,16 @@ public class SanPham {
         this.trangThai = trangThai;
     }
 
+    public DanhMuc getDanhMuc() {
+        return danhMuc;
+    }
+
+    public void setDanhMuc(DanhMuc danhMuc) {
+        this.danhMuc = danhMuc;
+    }
+    
+    
+
     @Override
     public String toString() {
         return "SanPham{" + "id=" + id + ", tenSanPham=" + tenSanPham + ", soLuong=" + soLuong + ", giaBan=" + giaBan + ", trangThai=" + trangThai + '}';

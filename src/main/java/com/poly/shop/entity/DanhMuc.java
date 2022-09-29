@@ -41,8 +41,18 @@ public class DanhMuc {
 
     @Override
     public String toString() {
-        return "DanhMuc{" + "maDanhMuc=" + maDanhMuc + ", tenDanhMuc=" + tenDanhMuc + ", listSanPham=" + listSanPham.toString() + '}';
+        return   maDanhMuc + "-" + tenDanhMuc;
     }
+
+    public Integer getMaDanhMuc() {
+        return maDanhMuc;
+    }
+
+    public void setMaDanhMuc(Integer maDanhMuc) {
+        this.maDanhMuc = maDanhMuc;
+    }
+    
+    
 
     public DanhMuc() {
     }

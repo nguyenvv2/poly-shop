@@ -7,7 +7,10 @@ package com.poly.shop.view;
 import com.poly.shop.entity.HoaDon;
 import com.poly.shop.entity.HoaDonChiTiet;
 import com.poly.shop.entity.SanPham;
+import com.poly.shop.repository.HoaDonRepository;
+import com.poly.shop.service.HoaDonService;
 import com.poly.shop.service.SanPhamService;
+import com.poly.shop.service.impl.HoaDonServiceImpl;
 import com.poly.shop.service.impl.SanPhamServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +26,14 @@ public class HoaDonView extends javax.swing.JFrame {
      * Creates new form HoaDonView
      */
     private SanPhamService sanPhamService = new SanPhamServiceImpl();
+    private HoaDonService hoaDonService = new HoaDonServiceImpl();
     private DefaultTableModel tableChiTiet;
     private DefaultTableModel tableSanPham;
     private DefaultTableModel tableHoaDon;
     private List<HoaDonChiTiet> listHoaDonChiTiet = new ArrayList<>();
     private List<HoaDon> listHoaDon = new ArrayList<>();
     private List<SanPham> listSanPham = new ArrayList<>();
+    private Integer tongTien = 0;
 
     public HoaDonView() {
         initComponents();
@@ -40,8 +45,12 @@ public class HoaDonView extends javax.swing.JFrame {
 
     private void loadTableChiTiet(List<HoaDonChiTiet> list) {
         tableChiTiet = (DefaultTableModel) tbChiTiet.getModel();
+        tableChiTiet.setRowCount(0);
         for (HoaDonChiTiet hoaDonChiTiet : list) {
-            tableChiTiet.addRow(new Object[]{});
+            tableChiTiet.addRow(new Object[]{hoaDonChiTiet.getMaSanPham(),
+                "", hoaDonChiTiet.getSoLuong(),
+                hoaDonChiTiet.getGiaBan(),
+                hoaDonChiTiet.getGiaBan() * hoaDonChiTiet.getSoLuong()});
         }
     }
 
@@ -151,6 +160,11 @@ public class HoaDonView extends javax.swing.JFrame {
         jLabel6.setText("Địa Chỉ");
 
         btnThanhToan.setText("Thanh Toán");
+        btnThanhToan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThanhToanActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Tổng tiền");
 
@@ -164,6 +178,11 @@ public class HoaDonView extends javax.swing.JFrame {
         });
 
         btnXoaGh.setText("Xoá khỏi giỏ hàng");
+        btnXoaGh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaGhActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -276,20 +295,40 @@ public class HoaDonView extends javax.swing.JFrame {
     private void btnGhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGhActionPerformed
         // TODO add your handling code here:
         int row = tbSanPham.getSelectedRow();
-        String ten = (String) tbSanPham.getValueAt(row, 0);
+        SanPham sanPham = sanPhamService.getListSanPham().get(row);
         HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
+        hoaDonChiTiet.setMaSanPham(sanPham.getId());
+        hoaDonChiTiet.setGiaBan(sanPham.getGiaBan());
+        hoaDonChiTiet.setSoLuong(1);
+        listHoaDonChiTiet.add(hoaDonChiTiet);
+        loadTableChiTiet(listHoaDonChiTiet);
 
-//        listHoaDonChiTiet = new ArrayList<>();
-        System.out.println(ten);
-        Integer tongTien = 0;
+        
         for (HoaDonChiTiet ct : listHoaDonChiTiet) {
             int tien = ct.getGiaBan() * ct.getSoLuong();
             tongTien += tien;
         }
         txtTongTien.setText(tongTien.toString());
-
-
     }//GEN-LAST:event_btnGhActionPerformed
+
+    private void btnXoaGhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaGhActionPerformed
+        // TODO add your handling code here:
+        int row = tbChiTiet.getSelectedRow();
+        listHoaDonChiTiet.remove(row);
+        loadTableChiTiet(listHoaDonChiTiet);
+    }//GEN-LAST:event_btnXoaGhActionPerformed
+
+    private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
+        // TODO add your handling code here:
+        HoaDon hoaDon = new HoaDon();
+        hoaDon.setTenKhachHang(txtTenKH.getText());
+        hoaDon.setDiaChi(txtDiaChi.getText());
+        hoaDon.setTongTien(tongTien);
+        
+        hoaDon = hoaDonService.saveHoaDon(hoaDon);
+        
+        
+    }//GEN-LAST:event_btnThanhToanActionPerformed
 
     /**
      * @param args the command line arguments

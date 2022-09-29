@@ -1,6 +1,7 @@
 package com.poly.shop.hibernateConfig;
 
 import com.poly.shop.entity.DanhMuc;
+import com.poly.shop.entity.HoaDon;
 import com.poly.shop.entity.SanPham;
 import java.util.Properties;
 import org.hibernate.SessionFactory;
@@ -22,12 +23,13 @@ public class HibernateConfig {
         properties.put(Environment.URL, "jdbc:sqlserver://localhost:1433;databaseName=TEST_HOA_DON");
         properties.put(Environment.USER, "sa");
         properties.put(Environment.PASS, "Password.1");
-        properties.put(Environment.SHOW_SQL, "true");
+//        properties.put(Environment.SHOW_SQL, "true");
 
         conf.setProperties(properties);
         
         conf.addAnnotatedClass(SanPham.class);
         conf.addAnnotatedClass(DanhMuc.class);
+        conf.addAnnotatedClass(HoaDon.class);
         ServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .applySettings(conf.getProperties()).build();
         FACTORY = conf.buildSessionFactory(registry);
